@@ -1,0 +1,18 @@
+# Local secrets and developer-specific configuration
+.env
+.env.*
+
+# Dependencies, build output, and test artifacts
+node_modules
+.next
+.output
+.vercel
+.wxt
+coverage
+*.tsbuildinfo
+
+# Local editor and diagnostic files
+.vscode
+.idea
+*.log
+npm-debug.log*

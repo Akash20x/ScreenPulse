@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScreenPulse gallery</title>
+  </head>
+  <body>
+    <main class="gallery-page">
+      <header class="gallery-header">
+        <div>
+          <p class="eyebrow">SCREENPULSE</p>
+          <h1>Local screenshots</h1>
+          <p id="gallery-summary" class="muted">Loading your newest saved screenshots…</p>
+        </div>
+        <div class="gallery-actions">
+          <button id="refresh-gallery" class="secondary" type="button">Refresh</button>
+          <button id="reset-gallery" class="danger" type="button">Reset gallery</button>
+        </div>
+      </header>
+      <section id="gallery-list" class="gallery-grid" aria-live="polite"></section>
+      <section id="gallery-empty" class="empty-state" hidden>
+        <h2>No screenshots saved yet</h2>
+        <p>Use Capture now in the ScreenPulse popup, or wait for the next scheduled capture.</p>
+      </section>
+    </main>
+
+    <dialog id="capture-dialog" class="capture-dialog" aria-labelledby="capture-title">
+      <div class="dialog-header">
+        <div><p id="capture-domain" class="eyebrow"></p><h2 id="capture-title"></h2></div>
+        <button id="close-dialog" class="icon-button" type="button" aria-label="Close screenshot">×</button>
+      </div>
+      <img id="capture-image" class="detail-image" alt="Captured browser viewport" />
+      <p id="capture-time" class="muted"></p><p id="capture-upload-status" class="upload-badge"></p>
+      <div class="dialog-actions">
+        <button id="download-capture" type="button">Download JPEG</button>
+        <button id="delete-capture" class="danger" type="button">Delete</button>
+      </div>
+    </dialog>
+    <script type="module" src="../src/gallery-ui.ts"></script>
+  </body>
+</html>
