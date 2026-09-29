@@ -12,7 +12,7 @@ ScreenPulse is a private screenshot system made of three connected parts:
 - `src/components/` contains web UI components. `src/lib/` contains Supabase clients, MCP/OAuth logic, upload validation, and gallery utilities.
 - `extension/` is the runnable WXT Chrome extension workspace. Run extension commands from this directory or with `npm --prefix extension ...`.
 - `extension/entrypoints/` contains the background service worker, options page, popup, and gallery. `extension/src/` contains capture, scheduling, IndexedDB queue, and upload logic.
-- Top-level `entrypoints/`, `wxt.config.ts`, and extension-oriented files directly in `src/` are exact mirrors of their `extension/` counterparts. The `extension/` directory is the runnable workspace; keep the mirrors synchronized until the legacy root-level copies are removed.
+- `extension/` is the sole source of truth for Chrome extension code and configuration. Do not add extension entrypoints or WXT configuration at the repository root.
 - `.env.example` is the safe, committed environment-variable template. `.env.local` is machine-local and must never be committed.
 
 ## How the Chrome extension works

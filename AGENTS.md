@@ -12,5 +12,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - The root is the Next.js web application deployed to Vercel. Keep `.env.local` local; only update `.env.example` with placeholder values and never commit secrets.
 - `extension/` is the runnable WXT Chrome extension workspace. Run its package scripts from that directory.
-- Top-level `entrypoints/`, `wxt.config.ts`, and the extension-oriented files directly under `src/` currently mirror their counterparts under `extension/`. When an extension change is unavoidable, keep both copies byte-for-byte synchronized, or remove the legacy mirrors in a dedicated, reviewed change.
+- `extension/` is the sole source of truth for Chrome extension code and configuration. Keep extension entrypoints, WXT configuration, and extension-specific source files inside that workspace.
 - Do not edit `.next/`, `.output/`, `.vercel/`, `.wxt/`, `node_modules/`, or `*.tsbuildinfo`; they are generated or machine-local files.
