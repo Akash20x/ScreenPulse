@@ -23,9 +23,7 @@ npm install
 
 Create a copy of `.env.example` named `.env.local` in the same `apps/web` folder.
 
-**Easiest option — use your file explorer or code editor:** right-click `.env.example`, choose **Copy** (or **Duplicate**), then rename the copy to `.env.local`.
-
-**Or use a terminal:** run **one** of the following commands while you are inside `apps/web`.
+Run **one** of the following commands while you are inside `apps/web`.
 
 | Your terminal | Command |
 | --- | --- |
