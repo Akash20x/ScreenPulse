@@ -5,6 +5,7 @@ const MAX_MEMORY_IMAGES = 60;
 
 const objectUrls = new Map<string, string>();
 const inFlight = new Map<string, Promise<string>>();
+const activeImages = new Map<string, number>();
 let preparedFor = '';
 let preparePromise: Promise<string | null> | null = null;
 
@@ -29,15 +30,32 @@ function clearMemory() {
   objectUrls.clear();
 }
 
+function trimMemory() {
+  while (objectUrls.size > MAX_MEMORY_IMAGES) {
+    const oldest = [...objectUrls.entries()].find(([key]) => !activeImages.has(key));
+    if (!oldest) break;
+    objectUrls.delete(oldest[0]);
+    URL.revokeObjectURL(oldest[1]);
+  }
+}
+
+export function retainScreenshotImage(userId: string, screenshotId: string) {
+  const key = `${userId}:${screenshotId}`;
+  activeImages.set(key, (activeImages.get(key) ?? 0) + 1);
+  return () => {
+    const count = activeImages.get(key) ?? 0;
+    if (count <= 1) activeImages.delete(key);
+    else activeImages.set(key, count - 1);
+    trimMemory();
+  };
+}
+
 function remember(key: string, blob: Blob) {
   const existing = objectUrls.get(key);
   if (existing) { objectUrls.delete(key); objectUrls.set(key, existing); return existing; }
   const url = URL.createObjectURL(blob);
   objectUrls.set(key, url);
-  if (objectUrls.size > MAX_MEMORY_IMAGES) {
-    const oldest = objectUrls.entries().next().value as [string, string] | undefined;
-    if (oldest) { objectUrls.delete(oldest[0]); URL.revokeObjectURL(oldest[1]); }
-  }
+  trimMemory();
   return url;
 }
 
@@ -112,5 +130,5 @@ export async function clearScreenshotImageCache() {
   await Promise.all(keys.filter((key) => key.startsWith(`${CACHE_PREFIX}:`)).map((key) => caches.delete(key)));
   window.sessionStorage.removeItem(SESSION_KEY);
   window.sessionStorage.removeItem(USER_KEY);
-  preparedFor = ''; preparePromise = null; clearMemory();
+  preparedFor = ''; preparePromise = null; clearMemory(); activeImages.clear();
 }

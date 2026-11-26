@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { loadScreenshotImage, screenshotCacheName, screenshotCacheRequestPath } from './screenshot-image-cache';
+import { loadScreenshotImage, retainScreenshotImage, screenshotCacheName, screenshotCacheRequestPath } from './screenshot-image-cache';
 
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
@@ -33,5 +33,30 @@ describe('screenshot loading', () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock).toHaveBeenLastCalledWith('/api/screenshots/image-test/image', { cache: 'no-store' });
     expect(cache.put).toHaveBeenCalledOnce();
+  });
+
+  it('keeps the displayed blob URL alive while many neighboring images preload', async () => {
+    const cache = { match: vi.fn().mockResolvedValue(undefined), put: vi.fn().mockResolvedValue(undefined) };
+    const storage = { getItem: (key: string) => key.includes('session') ? 'session-pinned' : 'user-pinned', setItem: vi.fn() };
+    vi.stubGlobal('window', { caches: {}, sessionStorage: storage });
+    vi.stubGlobal('caches', { keys: vi.fn().mockResolvedValue([]), open: vi.fn().mockResolvedValue(cache) });
+    vi.stubGlobal('Request', class { constructor(public url: string) {} });
+    vi.stubGlobal('fetch', vi.fn().mockImplementation(async () => new Response(new Blob(['image'], { type: 'image/png' }), { status: 200 })));
+    let nextUrl = 0;
+    vi.spyOn(URL, 'createObjectURL').mockImplementation(() => `blob:pinned-test-${++nextUrl}`);
+    const revoke = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => undefined);
+
+    const release = retainScreenshotImage('user-pinned', 'current');
+    const currentUrl = await loadScreenshotImage('user-pinned', 'current', 'https://storage.example/current');
+    for (let index = 0; index < 70; index += 1) {
+      await loadScreenshotImage('user-pinned', `neighbor-${index}`, `https://storage.example/${index}`);
+    }
+    expect(revoke).not.toHaveBeenCalledWith(currentUrl);
+    expect(await loadScreenshotImage('user-pinned', 'current', 'https://storage.example/current')).toBe(currentUrl);
+    release();
+    for (let index = 0; index < 70; index += 1) {
+      await loadScreenshotImage('user-pinned', `later-neighbor-${index}`, `https://storage.example/later-${index}`);
+    }
+    expect(revoke).toHaveBeenCalledWith(currentUrl);
   });
 });
