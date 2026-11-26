@@ -1,6 +1,6 @@
 # ScreenPulse
 
-ScreenPulse is a private screenshot library with manual uploads, folders, personal notes, and optional AI analysis through MCP.
+ScreenPulse is a private visual library for screenshots you want to keep, revisit, and understand. Save study material, work references, product ideas, design inspiration, or error messages in one secure place.
 
 ## Quick start
 
@@ -11,12 +11,12 @@ ScreenPulse is a private screenshot library with manual uploads, folders, person
 
 ## Using ScreenPulse
 
-- Upload up to 50 JPEG, PNG, or WebP images, up to 5 MB each, in batches of five.
-- Organize screenshots into folders and arrange their order.
-- Rename images, save paragraph notes, and copy or listen to notes and analysis.
-- Browse with a gallery, slideshow, or image-only view with mobile gestures.
-- Download images or create temporary public viewing links.
-- Connect MCP to list your folders, inspect images, and save analysis when you ask.
+- Upload up to 50 JPEG, PNG, or WebP images at a time, up to 5 MB each, then add more whenever you need to.
+- Choose a folder during upload and arrange its screenshots in your preferred order.
+- Rename screenshots, write multi-paragraph notes, and copy or listen to notes and AI analysis.
+- Browse with a gallery, compact list, slideshow, or image-only view with mobile swipe navigation.
+- Download original images or create temporary public viewing links that can expire or be revoked.
+- Connect an MCP-compatible AI assistant to list folders, inspect selected screenshots, and save explanations to the account you approve.
 
 Manual images stay in private account storage. Public viewing links allow anyone holding the link to access its image until expiry or revocation.
 
