@@ -21,17 +21,19 @@ npm install
 
 ## 2. Add local environment values
 
-Create `.env.local` from the example file:
+Create a copy of `.env.example` named `.env.local` in the same `apps/web` folder.
 
-```bash
-cp .env.example .env.local
-```
+**Easiest option — use your file explorer or code editor:** right-click `.env.example`, choose **Copy** (or **Duplicate**), then rename the copy to `.env.local`.
 
-On Windows PowerShell:
+**Or use a terminal:** run **one** of the following commands while you are inside `apps/web`.
 
-```powershell
-Copy-Item .env.example .env.local
-```
+| Your terminal | Command |
+| --- | --- |
+| macOS or Linux Terminal | `cp .env.example .env.local` |
+| Windows PowerShell | `Copy-Item .env.example .env.local` |
+| Windows Command Prompt | `copy .env.example .env.local` |
+
+When it is successful, you should see both `.env.example` and `.env.local` in the `apps/web` folder.
 
 Set the values in `.env.local` from your Supabase project:
 
