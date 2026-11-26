@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Build Plan"
+  short_description: "Turn an app idea into an implementation plan"
+  default_prompt: "Use $product-build-plan to create a detailed V1 plan from this product description."

@@ -31,6 +31,7 @@ label { display:grid; font-weight:700; gap:6px; }
 .gallery-toolbar { align-items:center; display:flex; gap:16px; justify-content:space-between; margin-bottom:16px; }
 .gallery-toolbar p { margin:0; }
 .gallery-toolbar-actions { align-items:center; display:flex; gap:10px; }
+.image-cache-progress { color:#52627a; font-size:.86rem; margin:0 0 10px; }
 .folder-bulk-toolbar { align-items:center; background:#f6f8fa; border:1px solid var(--line); border-radius:11px; display:flex; gap:12px; justify-content:space-between; margin:0 0 16px; padding:10px 12px; }
 .folder-bulk-summary, .folder-bulk-primary { align-items:center; display:flex; flex-wrap:wrap; gap:8px; }
 .folder-bulk-primary { margin-left:auto; }
