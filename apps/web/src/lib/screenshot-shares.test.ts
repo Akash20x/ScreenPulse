@@ -1,9 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { createShareToken, hashShareToken, isShareToken, SHARE_DURATIONS } from './screenshot-shares';
+import {
+  createShareToken,
+  hashShareToken,
+  isShareToken,
+  SHARE_DURATIONS
+} from './screenshot-shares';
 
 describe('screenshot share tokens', () => {
   it('generates unique, URL-safe secrets and stores only their hashes', () => {
-    const first = createShareToken(); const second = createShareToken();
+    const first = createShareToken();
+    const second = createShareToken();
     expect(isShareToken(first)).toBe(true);
     expect(first).not.toBe(second);
     expect(hashShareToken(first)).toMatch(/^[a-f0-9]{64}$/);

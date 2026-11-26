@@ -5,9 +5,13 @@ import { createClient } from '@/src/lib/supabase/server';
 import { createAdminClient } from '@/src/lib/supabase/admin';
 
 function safeNext(value: FormDataEntryValue | null) {
-  return typeof value === 'string' && value.startsWith('/oauth/authorize') ? value : '/dashboard';
+  return typeof value === 'string' && value.startsWith('/oauth/authorize')
+    ? value
+    : '/dashboard';
 }
-function message(error: string, next: string) { return `/login?error=${encodeURIComponent(error)}&next=${encodeURIComponent(next)}`; }
+function message(error: string, next: string) {
+  return `/login?error=${encodeURIComponent(error)}&next=${encodeURIComponent(next)}`;
+}
 
 export async function signIn(formData: FormData) {
   const email = String(formData.get('email') ?? '').trim();
@@ -30,10 +34,13 @@ export async function signInWithGoogle(formData: FormData) {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: callbackUrl.toString() },
+    options: { redirectTo: callbackUrl.toString() }
   });
 
-  if (error || !data.url) redirect(message(error?.message ?? 'Unable to start Google sign-in.', next));
+  if (error || !data.url)
+    redirect(
+      message(error?.message ?? 'Unable to start Google sign-in.', next)
+    );
   redirect(data.url);
 }
 
@@ -45,13 +52,16 @@ export async function signUp(formData: FormData) {
   const { error: createError } = await admin.auth.admin.createUser({
     email,
     password,
-    email_confirm: true,
+    email_confirm: true
   });
   if (createError) redirect(message(createError.message, next));
 
   // Establish the browser session immediately after creating the confirmed account.
   const supabase = await createClient();
-  const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
   if (signInError) redirect(message(signInError.message, next));
   redirect(next);
 }

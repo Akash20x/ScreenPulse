@@ -5,6 +5,6 @@ export function createAdminClient() {
   if (!secretKey) throw new Error('SUPABASE_SECRET_KEY is not configured.');
 
   return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, secretKey, {
-    auth: { autoRefreshToken: false, persistSession: false },
+    auth: { autoRefreshToken: false, persistSession: false }
   });
 }

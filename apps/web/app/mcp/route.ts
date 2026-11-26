@@ -5,13 +5,26 @@ import { appUrl, validateAccessToken } from '@/src/lib/mcp-oauth';
 
 export const runtime = 'nodejs';
 
-const handler = createMcpHandler(async (context) => {
-  if (!context.authInfo) throw new Error('MCP authentication context is required.');
-  return createScreenPulseMcpServer(context.authInfo);
-}, { legacy: 'stateless', responseMode: 'json' });
+const handler = createMcpHandler(
+  async (context) => {
+    if (!context.authInfo)
+      throw new Error('MCP authentication context is required.');
+    return createScreenPulseMcpServer(context.authInfo);
+  },
+  { legacy: 'stateless', responseMode: 'json' }
+);
 
 function unauthorized() {
-  return NextResponse.json({ error: 'unauthorized' }, { status: 401, headers: { 'WWW-Authenticate': `Bearer resource_metadata="${appUrl()}/.well-known/oauth-protected-resource"`, 'cache-control': 'no-store' } });
+  return NextResponse.json(
+    { error: 'unauthorized' },
+    {
+      status: 401,
+      headers: {
+        'WWW-Authenticate': `Bearer resource_metadata="${appUrl()}/.well-known/oauth-protected-resource"`,
+        'cache-control': 'no-store'
+      }
+    }
+  );
 }
 
 async function serve(request: Request) {
@@ -20,7 +33,16 @@ async function serve(request: Request) {
   if (!token) return unauthorized();
   const verified = await validateAccessToken(token);
   if (!verified) return unauthorized();
-  return handler.fetch(request, { authInfo: { token, clientId: verified.client_id, scopes: verified.scopes, expiresAt: Math.floor(new Date(verified.expires_at).getTime() / 1000), resource: new URL(verified.resource), extra: { userId: verified.user_id } } });
+  return handler.fetch(request, {
+    authInfo: {
+      token,
+      clientId: verified.client_id,
+      scopes: verified.scopes,
+      expiresAt: Math.floor(new Date(verified.expires_at).getTime() / 1000),
+      resource: new URL(verified.resource),
+      extra: { userId: verified.user_id }
+    }
+  });
 }
 
 export const GET = serve;

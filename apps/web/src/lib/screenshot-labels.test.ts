@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { screenshotDisplayTitle, screenshotSourceDomain } from './screenshot-labels';
+import {
+  screenshotDisplayTitle,
+  screenshotSourceDomain
+} from './screenshot-labels';
 
 describe('screenshot labels', () => {
   it('hides the manual-upload placeholder and keeps the filename', () => {

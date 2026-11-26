@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from 'motion/react';
 export function LandingReveal({
   children,
   className,
-  delay = 0,
+  delay = 0
 }: Readonly<{
   children: React.ReactNode;
   className?: string;
