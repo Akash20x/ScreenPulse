@@ -48,7 +48,26 @@ Every tool query is additionally filtered by the authenticated user ID. A valid 
 
 ## Available tools
 
-`mcp-server.ts` registers tools to identify the connected account, list folders, list screenshots, retrieve an individual screenshot, retrieve temporary viewing links for up to five screenshots, find recent or unanalysed screenshots, and save requested analysis.
+An MCP client or agent discovers these tool names from the server and calls only the tool needed for the request.
+
+| Tool | What the agent uses it for | Permission |
+| --- | --- | --- |
+| `get_profile` | Confirm which ScreenPulse account is connected. | None |
+| `list_folders` | Find folder names, folder IDs, and screenshot counts. | `screenshots:read` |
+| `list_screenshots` | List filenames and screenshot IDs in the saved folder order; supports paging and filtering for missing analysis. | `screenshots:read` |
+| `get_screenshot` | Retrieve one screenshot by ID or exact filename for inspection. It can return image content or a temporary link, and returns saved notes only when requested. | `screenshots:read` |
+| `get_screenshot_links` | Create temporary clickable viewing links for one to five chosen screenshot IDs. | `screenshots:read` |
+| `get_latest_screenshot` | Retrieve the newest screenshot across the connected account. | `screenshots:read` |
+| `get_latest_five_screenshots` | List metadata for the five newest screenshots. | `screenshots:read` |
+| `list_unanalyzed_screenshots` | Find the next screenshots in a folder that do not yet have saved analysis. | `screenshots:read` |
+| `save_screenshot_analysis` | Save up to five factual descriptions after the agent has inspected the corresponding images. Existing analysis is skipped rather than silently replaced. | `screenshots:analysis:write` |
+
+### Typical agent call sequences
+
+- **Answer a question about a folder:** `list_folders` → `list_screenshots` → `get_screenshot` for each relevant image.
+- **Give the user clickable image links:** `list_folders` or `list_screenshots` → `get_screenshot_links` with up to five selected IDs.
+- **Analyze images and save the results:** `list_unanalyzed_screenshots` → `get_screenshot` for each image → `save_screenshot_analysis`.
+- **Continue an interrupted analysis task:** `list_unanalyzed_screenshots` again, then repeat the inspection and save steps. The saved-analysis filter makes already completed screenshots fall away.
 
 Image inspection returns one bounded image at a time. For opening or sharing from a conversation, the link tools create a separate temporary URL. It expires after two hours, is not listed in the ScreenPulse dashboard, does not expose a storage URL, and is checked again when opened.
 
