@@ -3,26 +3,24 @@
 .env.*
 !.env.example
 
-# Dependencies and generated build output
+# Dependencies and generated output
 node_modules/
 .next/
 .output/
 .vercel/
-.wxt/
+.local/
 coverage/
 test-results/
 playwright-report/
 *.tsbuildinfo
 
-# Logs and diagnostic output
+# Logs and local editor files
 logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
-# Local IDE and operating-system files
 .vscode/
 .idea/
 .DS_Store

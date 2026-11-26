@@ -4,42 +4,38 @@ import Link from 'next/link';
 import {
   IconArrowDown,
   IconBrowser,
-  IconCamera,
-  IconCalendarClock,
   IconCheck,
   IconCloudUpload,
   IconDeviceMobile,
   IconEye,
   IconFolder,
   IconMenu2,
-  IconPlayerPause,
   IconUpload,
-  IconX,
 } from '@tabler/icons-react';
 import { LandingReveal } from '@/src/components/landing-reveal';
 import { createClient } from '@/src/lib/supabase/server';
 import styles from './landing.module.css';
 
 export const metadata: Metadata = {
-  title: 'ScreenPulse | Your private screenshot timeline',
-  description: 'Capture the browser work you choose, revisit it privately, and add context only when you want it.',
+  title: 'ScreenPulse | Your screenshot library',
+  description: 'Upload screenshots, organize them into folders, add notes, and explore them with your AI assistant.',
 };
 
 const workflow = [
   {
-    icon: IconBrowser,
-    title: 'Install the extension',
-    text: 'Add ScreenPulse to Chrome and choose the start date, end date, and daily hours for capture.',
+    icon: IconUpload,
+    title: 'Upload your screenshots',
+    text: 'Choose a folder and upload up to 50 images in batches of five. Retry any failed images without repeating successful uploads.',
   },
   {
-    icon: IconCalendarClock,
-    title: 'Capture on your schedule',
-    text: 'Every 30 minutes, ScreenPulse saves the Chrome webpage that is currently visible during your selected window.',
+    icon: IconFolder,
+    title: 'Arrange your collection',
+    text: 'Give your folders and screenshots useful names, arrange images in order, and save your own notes.',
   },
   {
-    icon: IconCloudUpload,
-    title: 'Review from your gallery',
-    text: 'Screenshots save locally first, then can upload to your private web gallery for review from another device.',
+    icon: IconEye,
+    title: 'Review and ask questions',
+    text: 'Swipe through images, listen to your notes, or connect your AI assistant to explain a screenshot when you ask.',
   },
 ];
 
@@ -82,23 +78,23 @@ export default async function Home() {
       <div id="main-content">
         <section className={styles.hero} aria-labelledby="hero-heading">
           <LandingReveal className={styles.heroCopy}>
-            <p className={styles.eyebrow}>Chrome extension and private web gallery</p>
-            <h1 id="hero-heading">Capture the browser work you choose.</h1>
-            <p className={styles.heroText}>Set a date and daily time window. ScreenPulse captures your currently visible Chrome webpage every 30 minutes, or you can upload screenshots directly.</p>
+            <p className={styles.eyebrow}>Your screenshots, organized</p>
+            <h1 id="hero-heading">Keep your screenshots useful.</h1>
+            <p className={styles.heroText}>Upload screenshots, organize them into folders, and add the context you want to remember. Review on any device or ask your connected AI assistant about a saved image.</p>
             <div className={styles.heroActions}>
               <a className={styles.primaryButton} href="#how-it-works">Explore the workflow <IconArrowDown aria-hidden="true" size={18} stroke={2} /></a>
               <Link className={styles.secondaryButton} href={accountHref}>{accountLabel}</Link>
             </div>
           </LandingReveal>
           <LandingReveal className={styles.heroArt} delay={0.1}>
-            <Image className={styles.heroImage} src="/images/screenpulse-hero.png" alt="A laptop with a visual browser workspace and one captured image floating in front of it." width={1584} height={990} priority sizes="(max-width: 780px) 100vw, 56vw" />
+            <Image className={styles.heroImage} src="/images/screenpulse-hero.png" alt="A laptop displaying a visual collection with an image floating in front of it." width={1584} height={990} priority sizes="(max-width: 780px) 100vw, 56vw" />
           </LandingReveal>
         </section>
 
         <section id="how-it-works" className={styles.section} aria-labelledby="workflow-heading">
           <LandingReveal className={styles.sectionHeading}>
-            <h2 id="workflow-heading">From active Chrome page to private timeline.</h2>
-            <p>Use the extension for automatic browser capture. The schedule is yours, and each screenshot starts on your device.</p>
+            <h2 id="workflow-heading">From saved images to a useful collection.</h2>
+            <p>Choose what to upload, arrange it in your own order, and return to it whenever you need.</p>
           </LandingReveal>
           <div className={styles.workflowGrid}>
             {workflow.map(({ icon: Icon, title, text }, index) => (
@@ -113,16 +109,16 @@ export default async function Home() {
         <section className={`${styles.section} ${styles.methodsSection}`} aria-labelledby="methods-heading">
           <LandingReveal className={styles.sectionHeading}>
             <h2 id="methods-heading">Add screenshots your way.</h2>
-            <p>ScreenPulse supports both automatic extension captures and direct uploads in the web app.</p>
+            <p>Add images from your computer or phone, then put each one where it belongs.</p>
           </LandingReveal>
           <div className={styles.methodsGrid}>
             <LandingReveal className={styles.method}>
-              <span className={styles.stepIcon}><IconCamera aria-hidden="true" size={23} stroke={1.8} /></span>
-              <div><h3>Automatic Chrome captures</h3><p>Within the date and time range you set, the extension captures only the active visible Chrome webpage every 30 minutes.</p></div>
+              <span className={styles.stepIcon}><IconCloudUpload aria-hidden="true" size={23} stroke={1.8} /></span>
+              <div><h3>Batch uploads</h3><p>Choose up to 50 JPEG, PNG, or WebP images, up to 5 MB each. Review duplicates before uploading and retry failed batches.</p></div>
             </LandingReveal>
             <LandingReveal className={styles.method} delay={0.08}>
               <span className={styles.stepIcon}><IconUpload aria-hidden="true" size={23} stroke={1.8} /></span>
-              <div><h3>Direct web uploads</h3><p>Already have an image? Add it directly from the web gallery when a manual screenshot is the better fit.</p></div>
+              <div><h3>Add an image in the right place</h3><p>Use a screenshot’s menu to upload another image immediately before or after it in your folder.</p></div>
             </LandingReveal>
           </div>
         </section>
@@ -130,16 +126,16 @@ export default async function Home() {
         <section id="privacy" className={styles.privacyBand} aria-labelledby="privacy-heading">
           <div className={`${styles.section} ${styles.privacyLayout}`}>
             <LandingReveal className={styles.privacyArt}>
-              <Image className={styles.privacyImage} src="/images/screenpulse-private-library.png" alt="A physical archive box holding a small private image library with a pause control." width={1254} height={1254} sizes="(max-width: 780px) 100vw, 40vw" />
+              <Image className={styles.privacyImage} src="/images/screenpulse-private-library.png" alt="An archive box representing a private image library." width={1254} height={1254} sizes="(max-width: 780px) 100vw, 40vw" />
             </LandingReveal>
             <LandingReveal className={styles.privacyContent} delay={0.08}>
               <p className={styles.eyebrow}>Built to stay in your hands</p>
-              <h2 id="privacy-heading">Capture context, not everything.</h2>
-              <p>ScreenPulse is designed around boundaries that are easy to understand and easy to change.</p>
+              <h2 id="privacy-heading">Your images, your account.</h2>
+              <p>Your screenshots stay in private storage. You decide when to include notes, request analysis, or create a viewing link.</p>
               <ul className={styles.privacyList}>
-                <li><IconEye aria-hidden="true" size={21} stroke={1.8} />Only the active, visible HTTP or HTTPS browser tab can be captured.</li>
-                <li><IconPlayerPause aria-hidden="true" size={21} stroke={1.8} />Pause tracking whenever you need to. Your existing schedule remains available.</li>
-                <li><IconCheck aria-hidden="true" size={21} stroke={1.8} />Incognito windows and browser internal pages are never captured.</li>
+                <li><IconEye aria-hidden="true" size={21} stroke={1.8} />Sign in to access your screenshot library.</li>
+                <li><IconFolder aria-hidden="true" size={21} stroke={1.8} />Keep your images and notes together in folders you control.</li>
+                <li><IconCheck aria-hidden="true" size={21} stroke={1.8} />Anyone with a public viewing link can open its image until the link expires or is revoked.</li>
               </ul>
             </LandingReveal>
           </div>
@@ -148,49 +144,49 @@ export default async function Home() {
         <section id="use-cases" className={styles.section} aria-labelledby="use-cases-heading">
           <LandingReveal className={styles.sectionHeading}>
             <h2 id="use-cases-heading">Make a visual record useful.</h2>
-            <p>ScreenPulse helps you revisit browser work without relying on memory, tabs, or a perfect note-taking habit.</p>
+            <p>Keep references, ideas, learning materials, and work notes together so you can find and understand them later.</p>
           </LandingReveal>
           <div className={styles.useCaseGrid}>
-            <LandingReveal className={styles.useCase}><IconBrowser aria-hidden="true" size={25} stroke={1.7} /><div><h3>Pick up where you left off</h3><p>Return to a browser page, pull request, document, or research thread you saw earlier.</p></div></LandingReveal>
-            <LandingReveal className={styles.useCase} delay={0.08}><IconFolder aria-hidden="true" size={25} stroke={1.7} /><div><h3>Keep research in view</h3><p>Build a chronological visual trail while you compare sources, references, and browser-based work.</p></div></LandingReveal>
-            <LandingReveal className={styles.useCase} delay={0.16}><IconDeviceMobile aria-hidden="true" size={25} stroke={1.7} /><div><h3>Review away from your desk</h3><p>Open your private web timeline from another device when you need a quick visual reminder.</p></div></LandingReveal>
+            <LandingReveal className={styles.useCase}><IconBrowser aria-hidden="true" size={25} stroke={1.7} /><div><h3>Pick up where you left off</h3><p>Review a saved reference, event detail, document, or idea without searching through scattered images.</p></div></LandingReveal>
+            <LandingReveal className={styles.useCase} delay={0.08}><IconFolder aria-hidden="true" size={25} stroke={1.7} /><div><h3>Keep research in view</h3><p>Group related images in a folder and arrange them in the order that makes sense to you.</p></div></LandingReveal>
+            <LandingReveal className={styles.useCase} delay={0.16}><IconDeviceMobile aria-hidden="true" size={25} stroke={1.7} /><div><h3>Review away from your desk</h3><p>Open your screenshot library on your phone, swipe between images, and read your saved notes.</p></div></LandingReveal>
           </div>
         </section>
 
         <section id="context" className={`${styles.section} ${styles.contextSection}`} aria-labelledby="context-heading">
           <div className={styles.contextLayout}>
             <LandingReveal className={styles.contextContent}>
-              <p className={styles.eyebrow}>Optional Codex analysis</p>
+              <p className={styles.eyebrow}>Optional AI analysis</p>
               <h2 id="context-heading">Turn a screenshot into useful context.</h2>
-              <p>After you connect ScreenPulse to Codex through MCP, Codex can retrieve an authorized screenshot, inspect it, write a factual description, and save that description back to the same screenshot in your private gallery.</p>
+              <p>Connect ScreenPulse through MCP to let your AI assistant inspect a screenshot and save a factual description to your private gallery when you ask.</p>
               <div className={styles.contextList}>
-                <div className={styles.contextItem}><IconFolder aria-hidden="true" size={23} stroke={1.8} /><div><strong>Connect your private account</strong><span>Authorize Codex to access only the screenshots you permit through ScreenPulse MCP.</span></div></div>
-                <div className={styles.contextItem}><IconEye aria-hidden="true" size={23} stroke={1.8} /><div><strong>Ask Codex to inspect a screenshot</strong><span>Codex receives the image, explains the visible details, then saves that description to the matching timeline item.</span></div></div>
+                <div className={styles.contextItem}><IconFolder aria-hidden="true" size={23} stroke={1.8} /><div><strong>Connect your private account</strong><span>Review the access requested by your assistant through ScreenPulse MCP.</span></div></div>
+                <div className={styles.contextItem}><IconEye aria-hidden="true" size={23} stroke={1.8} /><div><strong>Ask about a screenshot</strong><span>Your assistant can explain the visible details and save a description to that screenshot when you request it.</span></div></div>
               </div>
             </LandingReveal>
             <LandingReveal className={styles.contextArt} delay={0.1}>
-              <Image className={styles.contextImage} src="/images/screenpulse-mobile-timeline.png" alt="A phone displaying a visual timeline with captured images and a contextual note." width={1125} height={1407} sizes="(max-width: 780px) 100vw, 36vw" />
+              <Image className={styles.contextImage} src="/images/screenpulse-mobile-timeline.png" alt="A phone displaying saved images with a contextual note." width={1125} height={1407} sizes="(max-width: 780px) 100vw, 36vw" />
             </LandingReveal>
           </div>
         </section>
 
         <section className={`${styles.section} ${styles.notSection}`} aria-labelledby="boundaries-heading">
           <LandingReveal>
-            <h2 id="boundaries-heading">What ScreenPulse is not.</h2>
+            <h2 id="boundaries-heading">Keep the details that matter.</h2>
           </LandingReveal>
           <LandingReveal delay={0.08}>
             <ul className={styles.notList}>
-              <li><IconX aria-hidden="true" size={20} stroke={2} />It is not desktop-wide monitoring or a record of every app you use.</li>
-              <li><IconX aria-hidden="true" size={20} stroke={2} />It does not capture Incognito windows, Chrome internal pages, or full-page scrolls.</li>
-              <li><IconX aria-hidden="true" size={20} stroke={2} />It does not send every screenshot to an AI service or make AI processing a requirement.</li>
+              <li><IconCheck aria-hidden="true" size={20} stroke={2} />Add paragraph notes to record what an image means to you.</li>
+              <li><IconCheck aria-hidden="true" size={20} stroke={2} />Use image-only view when you want to focus on the screenshot.</li>
+              <li><IconCheck aria-hidden="true" size={20} stroke={2} />Ask your connected assistant for an explanation and save it for later.</li>
             </ul>
           </LandingReveal>
         </section>
 
         <section className={`${styles.section} ${styles.finalCta}`} aria-labelledby="cta-heading">
           <LandingReveal>
-            <h2 id="cta-heading">{user ? 'Your private timeline is ready when you are.' : 'Start with the work you choose to keep.'}</h2>
-            <p>{user ? 'Open your dashboard to review screenshots, upload an image, or manage the devices connected to your account.' : 'Create a private account, connect your extension when ready, and build a visual history on your terms.'}</p>
+            <h2 id="cta-heading">{user ? 'Your screenshot library is ready when you are.' : 'Start with the work you choose to keep.'}</h2>
+            <p>{user ? 'Open your dashboard to upload screenshots, organize your folders, and review your notes.' : 'Create an account, upload your first screenshots, and organize them in a folder.'}</p>
           </LandingReveal>
           <LandingReveal delay={0.08}><Link className={styles.primaryButton} href={accountHref}>{accountLabel}</Link></LandingReveal>
         </section>

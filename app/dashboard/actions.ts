@@ -8,7 +8,44 @@ import { createAdminClient } from '@/src/lib/supabase/admin';
 import { createClient } from '@/src/lib/supabase/server';
 import { fileExtensionForMimeType, isScreenshotMimeType, validateUpload } from '@/src/lib/upload-validation';
 
-export type UploadScreenshotState = { error?: string; success?: string };
+export type UploadScreenshotState = { error?: string; success?: string; folderId?: string };
+
+function folderName(value: FormDataEntryValue | null) {
+  return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : '';
+}
+
+export async function createScreenshotFolder(_: UploadScreenshotState, formData: FormData): Promise<UploadScreenshotState> {
+  const user = await requireUser();
+  const name = folderName(formData.get('name'));
+  if (!name || name.length > 80) return { error: 'Folder names must be between 1 and 80 characters.' };
+  const { data, error } = await createAdminClient().rpc('create_named_screenshot_folder', { p_user_id: user.id, p_name: name });
+  if (error?.code === '23505') return { error: 'You already have a folder with that name.' };
+  if (error) return { error: 'Could not create the folder.' };
+  revalidatePath('/dashboard');
+  return { success: 'Folder created.', folderId: data };
+}
+
+export async function renameScreenshotFolder(_: UploadScreenshotState, formData: FormData): Promise<UploadScreenshotState> {
+  const user = await requireUser();
+  const id = String(formData.get('folderId') ?? '');
+  const name = folderName(formData.get('name'));
+  if (!id || !name || name.length > 80) return { error: 'Enter a folder name between 1 and 80 characters.' };
+  const { data, error } = await createAdminClient().from('screenshot_folders').update({ name, updated_at: new Date().toISOString() }).eq('id', id).eq('user_id', user.id).select('id');
+  if (error?.code === '23505') return { error: 'You already have a folder with that name.' };
+  if (error || !data?.length) return { error: 'Could not rename that folder.' };
+  revalidatePath('/dashboard');
+  return { success: 'Folder renamed.' };
+}
+
+export async function deleteScreenshotFolder(formData: FormData) {
+  const user = await requireUser();
+  const id = String(formData.get('folderId') ?? '');
+  if (!id) return { error: 'Could not find that folder.' };
+  const { data, error } = await createAdminClient().from('screenshot_folders').delete().eq('id', id).eq('user_id', user.id).select('id');
+  if (error || !data?.length) return { error: 'Could not delete that folder. Please try again.' };
+  revalidatePath('/dashboard');
+  return { success: true };
+}
 
 export async function signOut() {
   const supabase = await createClient();
@@ -36,7 +73,6 @@ export async function uploadScreenshot(_: UploadScreenshotState, formData: FormD
   const storagePath = `${user.id}/uploads/${captureId}.${fileExtensionForMimeType(mimeType)}`;
   const { data: inserted, error: insertError } = await admin.from('screenshots').insert({
     user_id: user.id,
-    device_id: null,
     capture_id: captureId,
     page_url: 'https://screenpulse.local/upload',
     page_title: screenshot.name || 'Uploaded screenshot',
