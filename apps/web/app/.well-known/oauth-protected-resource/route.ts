@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { appUrl, mcpResourceUrl } from '@/src/lib/mcp-oauth';
+import { appUrl, mcpResourceUrl } from '@/src/mcp/mcp-oauth';
 
 export function GET() {
   return NextResponse.json({

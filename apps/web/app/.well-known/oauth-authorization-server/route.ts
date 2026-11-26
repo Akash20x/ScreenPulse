@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { appUrl } from '@/src/lib/mcp-oauth';
+import { appUrl } from '@/src/mcp/mcp-oauth';
 
 export function GET() {
   const base = appUrl();

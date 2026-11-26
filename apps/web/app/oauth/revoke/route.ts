@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/src/lib/supabase/admin';
-import { hashSecret } from '@/src/lib/mcp-oauth';
+import { hashSecret } from '@/src/mcp/mcp-oauth';
 
 export const runtime = 'nodejs';
 

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { hashMcpImageLinkToken } from '@/src/lib/mcp-image-links';
+import { hashMcpImageLinkToken } from '@/src/mcp/mcp-image-links';
 import { createAdminClient } from '@/src/lib/supabase/admin';
 
 export const runtime = 'nodejs';

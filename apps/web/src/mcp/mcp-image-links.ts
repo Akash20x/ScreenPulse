@@ -1,5 +1,5 @@
 import { createHash, randomBytes } from 'node:crypto';
-import { appUrl } from '@/src/lib/mcp-oauth';
+import { appUrl } from '@/src/mcp/mcp-oauth';
 import { createAdminClient } from '@/src/lib/supabase/admin';
 
 export const MCP_IMAGE_LINK_TTL_SECONDS = 2 * 60 * 60;

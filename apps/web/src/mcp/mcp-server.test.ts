@@ -13,7 +13,7 @@ const state = vi.hoisted(() => ({
   download: vi.fn(),
   links: vi.fn()
 }));
-vi.mock('@/src/lib/mcp-image-links', () => ({
+vi.mock('@/src/mcp/mcp-image-links', () => ({
   createMcpImageLinks: (...args: any[]) => state.links(...args)
 }));
 vi.mock('@modelcontextprotocol/server', () => ({

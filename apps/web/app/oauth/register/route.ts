@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/src/lib/supabase/admin';
-import { isSafeRedirectUri } from '@/src/lib/mcp-oauth';
+import { isSafeRedirectUri } from '@/src/mcp/mcp-oauth';
 
 export const runtime = 'nodejs';
 

@@ -1,7 +1,7 @@
 import { AppNav } from '@/src/components/app-nav';
-import { McpGuide } from '@/src/components/mcp-guide';
+import { McpGuide } from '@/src/mcp/mcp-guide';
 import { requireUser } from '@/src/lib/auth';
-import { appUrl, mcpResourceUrl } from '@/src/lib/mcp-oauth';
+import { appUrl, mcpResourceUrl } from '@/src/mcp/mcp-oauth';
 
 export default async function McpGuidePage() {
   const user = await requireUser();

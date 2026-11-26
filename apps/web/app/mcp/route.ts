@@ -1,7 +1,7 @@
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { NextResponse } from 'next/server';
-import { createScreenPulseMcpServer } from '@/src/lib/mcp-server';
-import { appUrl, validateAccessToken } from '@/src/lib/mcp-oauth';
+import { createScreenPulseMcpServer } from '@/src/mcp/mcp-server';
+import { appUrl, validateAccessToken } from '@/src/mcp/mcp-oauth';
 
 export const runtime = 'nodejs';
 

@@ -5,7 +5,7 @@ const state = vi.hoisted(() => ({
   calls: [] as { table: string; method: string; args: any[] }[],
   download: vi.fn()
 }));
-vi.mock('@/src/lib/mcp-oauth', () => ({
+vi.mock('@/src/mcp/mcp-oauth', () => ({
   appUrl: () => 'https://screenpulse.example'
 }));
 vi.mock('@/src/lib/supabase/admin', () => ({

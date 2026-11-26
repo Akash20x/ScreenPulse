@@ -6,7 +6,7 @@ import {
   issueTokenPair,
   mcpResourceUrl,
   verifyPkce
-} from '@/src/lib/mcp-oauth';
+} from '@/src/mcp/mcp-oauth';
 
 export const runtime = 'nodejs';
 

@@ -6,7 +6,7 @@ import {
   screenshotDisplayTitle,
   screenshotSourceDomain
 } from '@/src/lib/screenshot-labels';
-import { createMcpImageLinks } from '@/src/lib/mcp-image-links';
+import { createMcpImageLinks } from '@/src/mcp/mcp-image-links';
 
 const fields =
   'id,page_url,page_title,captured_at,storage_path,mime_type,folder_id,analysis_description';
